@@ -1,0 +1,7 @@
+name,User's login name.
+password,User's encrypted password.
+uid,User's login user ID.
+gid,User's login group ID.
+gecos,General information about the user.
+home_dir,User's home directory.
+shell,User's login shell.
