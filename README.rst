@@ -14,15 +14,15 @@ datajoint-python proper.
 
 Current proposed structure:
 
-  - djwip/ext : stabilized/'semi-official' wip utilities which are
-    feature complete but for various reasons cannot/will not be
-    merged into datajoint proper.
+- djwip/ext : stabilized/'semi-official' wip utilities which are
+  feature complete but for various reasons cannot/will not be
+  merged into datajoint proper.
 
-  - djwip/future : integration branch for features being merged
-    into mainline - e.g. 'alpha'/'beta' modules/features.
+- djwip/future : integration branch for features being merged
+  into mainline - e.g. 'alpha'/'beta' modules/features.
 
-  - djwip/<github-username> : per-developer sandbox; allows scratch
-    development and distribution without impacting other code
+- djwip/<github-username> : per-developer sandbox; allows scratch
+  development and distribution without impacting other code
 
 These directories should be suitable for import as python modules, eg:
 
