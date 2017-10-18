@@ -30,6 +30,12 @@ These directories should be suitable for import as python modules, eg:
   >>> from djwip.future import KeystoneXL
   >>> import djwip.ixcat as mydj
 
+Unit tests are kept in a separate directory heirarchy `tests` which
+mirrors the above. Anything moved into ext or future should have a
+unit test; per-user areas, as works in progress can by in any state
+of operation, though it would be ideal if code is appropriately
+labeled as functional, etc.
+
 Related files such as pip requirements / setup scripts / documentation
 etc should be kept within <github-username> directories or optionally
 per-feature subdirectories of same until they are migrated to the
