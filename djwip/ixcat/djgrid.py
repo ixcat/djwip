@@ -23,7 +23,7 @@ class DJGrid:
 
     def save(self):
         self._djpanda._edit = self._widget.get_changed_df()
-        self._djpanda.save()
+        return self._djpanda.save()
 
     def edit(self):
         # todo: get full-loop interaction going in jupyter
