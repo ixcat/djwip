@@ -1,0 +1,9 @@
+rudimentary performance unit test suite;
+currently only covers schema creation cases.
+
+schema based on https://github.com/datajoint-catalog/djcat-ret1
+
+usage:
+  - start tcpdump-mysql.sh if you are interested in packets
+  - run perftest-profile.sh to trigger a run of perftest.py with cProfile
+  - run perftest-report.py to see some information about the run.
