@@ -41,4 +41,3 @@ class Trial(dj.Manual):
     -> TrialType
     trial_result:	bool		# trial result
     '''
-
