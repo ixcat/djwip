@@ -127,3 +127,8 @@ class DJRecord:
 
     def create(self):
         interact_manual(self._create_cb, **self._widget_dict)
+
+
+def create(tableclass):
+    ''' convenience wrapper around DJRecord '''
+    DJRecord(tableclass).create()
