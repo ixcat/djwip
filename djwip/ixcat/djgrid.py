@@ -11,7 +11,23 @@ from ipywidgets import FloatText
 from ipywidgets import ToggleButton
 from ipywidgets import Text
 from ipywidgets import Textarea
-from ipywidgets import DatePicker
+
+'''
+Note:
+DatePicker not so supported, so using text input for now.
+
+# from ipywidgets import DatePicker
+
+/ipywidgets/docs/source/examples/Widget%20List.ipynb:
+
+  "The date picker widget works in Chrome and IE Edge, but does not currently
+  work in Firefox or Safari because they do not support the HTML date input
+  field."
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date#Browser_compatibility
+
+Will be fixed in next FF release (57), still nothing in Opera.
+'''
 
 
 class DJGrid:
@@ -64,7 +80,7 @@ class DJRecord:
         'float': (FloatText, {}),
         'varchar': (Text, {}),
         'text': (Textarea, {}),
-        'date': (DatePicker, {}),
+        'date': (Text, {}),
     }
 
     def __init__(self, tableclass):
