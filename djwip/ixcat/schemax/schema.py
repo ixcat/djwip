@@ -33,11 +33,23 @@ class TrialType(dj.Lookup):
 
 
 @schema
+class SomeMeasurement(dj.Manual):
+    # test for decimal fields
+    definition = '''
+    -> Animal
+    measurement_id:     int             # measurement id
+    ---
+    value:              decimal(3,2)    # measurement value
+    '''
+
+
+@schema
 class Trial(dj.Manual):
     definition = '''
     -> Session
     trial_id:		int		# trial id
     ---
     -> TrialType
+    -> SomeMeasurement
     trial_result:	bool		# trial result
     '''
