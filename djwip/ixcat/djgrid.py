@@ -67,21 +67,40 @@ class DJRecord:
     Needs more testing; should be functional for basic int/text cases.
 
     TODO:
-
-    - longer varchar to text area dispatch
     - provide way to browse fk data records; for now, must query the foreign
       table to determine other data records and manually re-enter.
-
     '''
 
     _widgetmap = {
-        'bool': (ToggleButton, {}),
-        'int': (IntText, {}),
-        'tinyint': (IntText, {}),  # todo: limit max input?
-        'float': (FloatText, {}),
-        'varchar': (Text, {}),
-        'text': (Textarea, {}),
-        'date': (Text, {}),
+        'bool': (ToggleButton, {}),             # XXX: not dj supported
+        'tinyint': (IntText, {}),               # TODO: limit max input?
+        'tinyint unsigned': (IntText, {}),      # TODO: >0; limit max?
+        'smallint': (IntText, {}),              # TODO: limit max input?
+        'smallint unsigned': (IntText, {}),     # TODO: >0; limit max?
+        'mediumint': (IntText, {}),             # TODO: limit max input?
+        'mediumint unsigned': (IntText, {}),    # TODO: >0; limit max?
+        'int': (IntText, {}),                   # TODO: limit max input?
+        'int unsigned': (IntText, {}),          # TODO: >0; limit max?
+        'enum': (Text, {}),                     # TODO: choices -> dropdown
+        'date': (Text, {}),                     # TODO: comment fmt?
+        'time': (Text, {}),                     # TODO: comment fmt?
+        'timestamp': (Text, {}),                # TODO: comment fmt?
+        'char': (Text, {}),                     # TODO: length, Textarea
+        'varchar': (Text, {}),                  # TODO: length, Textarea
+        'float': (FloatText, {}),               # TODO: limit max?
+        'double': (FloatText, {}),              # TODO: limit max?
+        'decimal': (FloatText, {}),             # TODO: test, parse fixlen
+        'decimal unsigned': (FloatText, {}),    # TODO: test, parse, fixlen
+
+        # TODO: file upload support for blobs..
+        # see also:
+
+        # https://github.com/jupyter-widgets/ipywidgets/issues/1542
+        # https://github.com/peteut/ipython-file-upload
+
+        # tinyblob
+        # mediumblob
+        # blob
     }
 
     def __init__(self, tableclass):
