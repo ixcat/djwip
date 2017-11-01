@@ -77,6 +77,7 @@ class DJRecord:
     _widgetmap = {
         'bool': (ToggleButton, {}),
         'int': (IntText, {}),
+        'tinyint': (IntText, {}),  # todo: limit max input?
         'float': (FloatText, {}),
         'varchar': (Text, {}),
         'text': (Textarea, {}),
