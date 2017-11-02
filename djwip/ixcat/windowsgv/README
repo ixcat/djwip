@@ -1,0 +1,60 @@
+
+This directory contains some evaluations of plotting graphviz diagrams
+using various python modules *other* than pygraphviz due to difficulty
+in getting pygraphviz to work on 64bit python in windows.
+
+Status:
+
+The 'PyDot' and 'graphviz' modules were both tested and found to
+be functional for plotting using a subprocess to render the graph.
+
+PyDot is likely a better implementatino choice since NetworkX
+has a native mechanism to interface with this library.
+
+However, NetworkX v1.1 expects 'pydotplus' which is/was a pydot fork;
+NetworkX v2.0 reverts  reverting to the original 'pydot' library -
+therefore it might be best to migrate to NetworkX v2.0 before changing
+any graph rendering backend and instead provide via some sort of patched
+mechanism, or similar.
+
+File Details:
+
+graphviz-test.ipynb : graphviz example notebook
+graphviz-test.py : graphviz example script
+pydot-test.ipynb : pydot example notebook
+pydot-test.py : pydot example script
+
+
+Background
+==========
+
+- Datajoint requires python >= 3.4
+- Pygraphviz is currently used (2017-11) in datajoint for plotting
+- Pygraphviz is a python module directly linked to the graphviz c-api 
+- Graphviz does not have an official 64 bit windows relase
+- MSVC is reportedly heavily 'version-specific' - e.g. builds are only
+  binary compatible if built with the same toolchain.
+- Only MSVC15 is readily available for Windows 10 at time of writing
+- Unofficial/beta graphviz 64 bit builds are available using MSVC15
+- PyGraphviz builds against python 3.4, 3.5, but graphviz builds are
+  MSVC15 and py 3.4, 3.5 are not MSVC15 built.
+- Python >=3.5 changes IO and requires non-merged patch to build pygraphviz
+  on windows
+- With patch, Build works but library load into interpreter fails 
+  for some unknown reason.
+
+So, theoretically a Python 3.6/graphviz build should be possible,
+but for some reason the build doesn't "do". No extant reports show
+a successful combination of 64bit, windows, py3.6, and we can't
+build py<=3.6 without toolchain as a sanity check. Even then, patch
+required by py3.6 is non-core yet, with no urgency in sight and 
+requires unofficial graphviz and custom building, so investigaitons
+were made into what else might work.
+
+See also:
+
+https://github.com/pygraphviz/pygraphviz/issues/7
+https://github.com/pygraphviz/pygraphviz/issues/74
+https://www.lfd.uci.edu/~gohlke/pythonlibs : has unofficial 64bit 3.4x wheel
+
+
