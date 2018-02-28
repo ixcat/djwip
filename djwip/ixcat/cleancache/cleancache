@@ -1,0 +1,35 @@
+#! /bin/sh
+# simple cache cleaner background script
+
+usage_exit() {
+	echo "usage: $me dir sizemb nclean interval"
+	echo "  will run only 1x if interval==0"
+	exit 0;
+}
+
+err_exit() {
+	echo "$me: error: $*";
+	exit 1;
+}
+
+do_clean() {
+	dirsize="`du -sm $dir`";
+	if [ "$dirsize" -gt "$size" ]; then
+		cd $dir && rm -vf `ls -rt |tail -n $nclean`;
+	fi
+}
+
+# _start:
+me="`basename $0`"
+[ "$#" -lt "4" ] && usage_exit;
+dir=$1; size=$2; nclean=$3; interval=$4;
+
+[ ! -d "$dir" ] && err_exit "dir $dir doesn't exist!"
+if [ "$interval" -gt "0" ]; then
+	while true; do
+		do_clean;
+		sleep $interval;
+	done
+else
+		do_clean;
+fi
