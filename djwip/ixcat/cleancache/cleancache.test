@@ -1,3 +1,4 @@
 #! /bin/sh
+mkdir foo
 for x in 1 2 3 4 5 6; do dd if=/dev/zero of=./foo/${x} bs=1m count=1; done
 ./cleancache ./foo 1 1 1
