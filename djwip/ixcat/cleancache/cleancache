@@ -13,9 +13,9 @@ err_exit() {
 }
 
 do_clean() {
-	dirsize="`du -sm $dir`";
+	dirsize="`du -sm $dir |cut -f 1`";
 	if [ "$dirsize" -gt "$size" ]; then
-		cd $dir && rm -vf `ls -rt |tail -n $nclean`;
+		( cd $dir && rm -vf `ls -rt |tail -n $nclean`; );
 	fi
 }
 
