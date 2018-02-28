@@ -4,7 +4,7 @@ useful until datajoint grows native cache cleaning capabilities.
 
 synopsis: cleancache dir sizemb nclean interval
 
-cleancache will clean top-level files in 'dir' if contents greater than sizemb
+cleancache will clean top-level files in dir if contents greater than sizemb
 by removing oldest nclean files at interval interval. If interval
 is 0, will only run 1x.
 
