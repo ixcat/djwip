@@ -36,6 +36,8 @@ class InsertBuffer(object):
         flush the buffer
         XXX: use kwargs?
         XXX: ignore_extra_fields na, requires .insert() support
+        XXX: also get pymysql.err.DataError, etc - catch these or pr datajoint?
+        XXX: optional flush-on-error? howto..
         '''
         qlen = len(self._queue)
         if qlen > 0 and qlen % chunksz == 0:
