@@ -76,8 +76,11 @@ def check_table(schema, rel):
             except IntegrityError:
                 print('... {}: hash mismatch'.format(r))
             except DataJointError as e:
+                matched = False
                 for m in [re.match('^Lost.*?blob (.*)\.$', str(e))]:
                     print('... {}: missing file {}'.format(r, m.groups()[0]))
+                if not matched:
+                    raise
 
 
 def fsck(sname):
