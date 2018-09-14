@@ -63,8 +63,7 @@ def check_table(schema, rel):
     for e in ext:
         fields = [*key, e]
         q = 'select {} from `{}`.`{}`'.format(','.join(fields), db, tab)
-        res = conn.query(q)
-        for r in res:
+        for r in conn.query(q):
             try:
                 h = r[len(fields)-1]
                 b = schema.external_table.get(h)
@@ -82,6 +81,7 @@ def check_table(schema, rel):
                     matched = True
                 if not matched:
                     raise
+
 
 def fsck(sname):
     '''
