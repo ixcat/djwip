@@ -79,9 +79,9 @@ def check_table(schema, rel):
                 matched = False
                 for m in [re.match('^Lost.*?blob (.*)\.$', str(e))]:
                     print('... {}: missing file {}'.format(r, m.groups()[0]))
+                    matched = True
                 if not matched:
                     raise
-
 
 def fsck(sname):
     '''
