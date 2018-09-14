@@ -23,6 +23,9 @@ example output:
     ... (7, 'UQTurgINzbGhD4I4E8xuGt02UAkMzeU5fcazfVy3qhk'): OK!
     ... (1, 'uWJ9mZNzTv4oQYjlvaJ5D0rqHGiCdnhF35UDXrZxtH4'): hash mismatch
 
+todo:
+  - performance
+  - reimplement within dj.ExternalTable like the cleanup logic
 '''
 
 import sys
