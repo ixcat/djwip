@@ -37,7 +37,16 @@ def table_to_class(tablename, schema):
     ''' return class instance for a given tablename/schema '''
     schema_prep(schema)
     tname = table_to_classname(tablename, schema)
-    return schema.context[tname]
+    tnames = tname.split('.')
+
+    if len(tnames) == 1:
+        return schema.context[tnames[0]]
+
+    if len(tnames) == 2:
+        master, part = tnames[:]
+        return schema.context[master].__dict__[part]
+
+    raise RuntimeError('class name {} unexpected (ndots > 1)'.format(tname))
 
 
 def schema_iterator(schema):
