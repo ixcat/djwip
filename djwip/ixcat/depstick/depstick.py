@@ -3,23 +3,25 @@
 '''
 datajoint schema dependency checker -
 
-lists schemas that are dependent on given schemas
+lists schemas that are dependent on given schemas,
+or lists schemas in general
 
 usage: depstick.py schema ...
 '''
 
+import os
 import sys
 
 import datajoint as dj
 
 
 def usage_exit():
-    print('usage: depstick.py [forward|reverse] schema ...')
+    print('usage: depstick.py [forward|reverse|list] schema ...')
     sys.exit(0)
 
 
 def depstick(sname, direction='reverse'):
-    ''' actually check/print report of dependencies '''
+    ''' check/print report of dependencies '''
     vm = dj.create_virtual_module(sname, sname)
     dbc = vm.schema.connection
 
@@ -48,14 +50,28 @@ def depstick(sname, direction='reverse'):
         print(r[0]) if r[0] != sname else None
 
 
+def schemalist():
+    ''' list schemas '''
+    dbc = dj.connection.conn()
+
+    for r in dbc.query('select schema_name from information_schema.schemata;'):
+        print(r[0])
+
+
 if __name__ == '__main__':
 
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         usage_exit()
 
-    direction = sys.argv[1]
-    if direction not in {'forward', 'reverse'}:
+    cmd = sys.argv[1]
+    if cmd not in {'forward', 'reverse', 'list'}:
         usage_exit()
 
-    for sname in sys.argv[2:]:
-        depstick(sname, direction)
+    if os.path.exists('dj_local_conf.json'):
+        dj.config.load('dj_local_conf.json')
+
+    if cmd != 'list':
+        for sname in sys.argv[2:]:
+            depstick(sname, cmd)
+    else:
+        schemalist()
