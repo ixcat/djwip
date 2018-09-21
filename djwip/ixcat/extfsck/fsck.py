@@ -24,6 +24,16 @@ example output:
     ... (1, 'uWJ9mZNzTv4oQYjlvaJ5D0rqHGiCdnhF35UDXrZxtH4'): hash mismatch
 
 todo:
+  - fix for part tables. notes:
+        if isinstance(rel,str):
+                rel = eval(rel)```
+
+        in `table_to_class` :
+        try:
+                return schema.context[tname]
+            except:
+                # part table?
+                return tname
   - performance
   - reimplement within dj.ExternalTable like the cleanup logic
 '''
@@ -70,8 +80,12 @@ def check_table(schema, rel):
             try:
                 h = r[len(fields)-1]
                 b = schema.external_table.get(h)
-                if h != long_hash(pack(b)):  # XXX: slooow.. double pack
+
+                # can get None in some cases.. not sure when/where why.
+                # XXX: slooow.. double pack
+                if b is None or h != long_hash(pack(b)):
                     raise IntegrityError('hash mismatch')
+
                 print('... {}: OK!'.format(r))  # todo: verbose flag?
             except AssertionError:
                 print('... {}: size mismatch'.format(r))
