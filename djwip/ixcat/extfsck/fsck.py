@@ -24,16 +24,6 @@ example output:
     ... (1, 'uWJ9mZNzTv4oQYjlvaJ5D0rqHGiCdnhF35UDXrZxtH4'): hash mismatch
 
 todo:
-  - fix for part tables. notes:
-        if isinstance(rel,str):
-                rel = eval(rel)```
-
-        in `table_to_class` :
-        try:
-                return schema.context[tname]
-            except:
-                # part table?
-                return tname
   - performance
   - reimplement within dj.ExternalTable like the cleanup logic
 '''
