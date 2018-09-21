@@ -38,7 +38,6 @@ class FsckData(dj.Lookup):
 
     @property
     def contents(self):
-
         return (self.mkone(i) for i in range(self.nrecs))
 
     def populate(self):
@@ -64,3 +63,6 @@ class FsckData(dj.Lookup):
 
             if ft == 'appendfile':
                 print('appendfile', h)
+
+
+FsckData().populate()  # e.g. FsckPart.contents()
