@@ -24,6 +24,7 @@ def usage_exit():
 
 def depstick(sname, direction='reverse'):
     ''' check/print report of dependencies '''
+
     vm = dj.create_virtual_module(sname, sname)
     dbc = vm.schema.connection
 
@@ -66,7 +67,8 @@ def graph(*args):
 
     print('// fetching schema list...')
     lq = 'select schema_name from information_schema.schemata'
-    ignore = {'information_schema', 'performance_schema'}
+    ignore = {'tmp', 'innodb', 'mysql', 'information_schema',
+              'performance_schema'}
     names = [r[0] for r in dbc.query(lq) if r[0] not in ignore]
 
     g = nx.DiGraph()
@@ -121,8 +123,8 @@ if __name__ == '__main__':
     if os.path.exists('dj_local_conf.json'):
         dj.config.load('dj_local_conf.json')
 
-    if cmd == 'depstick':
+    if cmdmap[cmd] == depstick:
         for sname in sys.argv[2:]:
             depstick(sname, cmd)
-
-    cmdmap[cmd](sys.argv[2:])
+    else:
+        cmdmap[cmd](sys.argv[2:])
