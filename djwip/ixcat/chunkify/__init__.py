@@ -60,7 +60,7 @@ class InsertBuffer(object):
             return self.flush(1)
 
 
-class ChunkyRelation(dj.BaseRelation):
+class ChunkyTable(dj.Table):
     ''' todo: implement, test '''
 
     def __init__(self, rel, chunksz=100):
