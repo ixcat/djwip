@@ -43,9 +43,9 @@ def test_insertbuffer_insert1():
 
     ib = InsertBuffer(TestTable)
     nrec = 103
-    
+
     for x in range(nrec):
-        ib.insert1((x,'item {}'.format(x)))
+        ib.insert1((x, 'item {}'.format(x)))
         if ib.flush(chunksz=10):
             log.debug('chunked at item {}'.format(x))
             assert_equals(len(TestTable()) % 10, 0)
@@ -59,7 +59,7 @@ def test_insertbuffer_insert1_opts():
     teardown()
 
     nrec = 103
-    ib = InsertBuffer(TestTable)
+    ib = InsertBuffer(TestTable, chunksz=10, skip_duplicates=True)
 
     for x in range(nrec):
 
@@ -69,11 +69,11 @@ def test_insertbuffer_insert1_opts():
         # ignore_extra_fields requires dj .insert() support for same..
         # ib.insert1((x, 'item {}'.format(x), 0))  # ignore_extra_fields
 
-        if ib.flush(chunksz=10, skip_duplicates=True):
+        if ib.flush():
             log.debug('chunked at item {}'.format(x))
-            assert_equals(len(TestTable()) % 10, 0)
+            assert_equals(len(TestTable()) % 5, 0)
 
-    if ib.flush(skip_duplicates=True):
+    if ib.flush(chunksz=1):
         log.debug('finished at item {}'.format(x))
         assert_equals(len(TestTable()), 103)
 
@@ -87,7 +87,7 @@ def test_insertbuffer_insert():
 
     for x in range(1, nrec_x+1):
         x = x*10
-        xy = [(x+y, 'record {}'.format(x*y)) for y in range(1,nrec_y+1)]
+        xy = [(x+y, 'record {}'.format(x*y)) for y in range(1, nrec_y+1)]
         ib.insert(xy)
         ib.flush()
 
@@ -97,11 +97,24 @@ def test_insertbuffer_insert_opts():
 
     nrec_x = 10
     nrec_y = 10
-    ib = InsertBuffer(TestTable)
+    ib = InsertBuffer(TestTable, chunksz=1, skip_duplicates=True)
 
     for x in range(1, nrec_x+1):
         x = x*10
-        xy = [(x+y, 'record {}'.format(x*y)) for y in range(1,nrec_y+1)]
+        xy = [(x+y, 'record {}'.format(x*y)) for y in range(1, nrec_y+1)]
         xy = xy + xy
         ib.insert(xy)
-        ib.flush(skip_duplicates=True)
+        ib.flush()
+
+
+def test_insertbuffer_contextmanager_insert():
+    teardown()
+
+    with InsertBuffer(TestTable, chunksz=10) as ib:
+        for x in range(0, 101):
+            ib.insert1((x, str(x)))
+            print(ib._queue)
+            if ib.flush(10):
+                log.debug('flushed at {}'.format(x))
+
+    assert_equals(len(TestTable()), 101)
