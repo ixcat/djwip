@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+
 import djwip.ixcat.djpatch as dj
 
 
@@ -35,4 +37,5 @@ def test_djpatch():
 
 
 if __name__ == '__main__':
-    test_djpatch()
+    from code import interact
+    interact('djpatch', local=locals())
