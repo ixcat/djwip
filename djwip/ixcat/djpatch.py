@@ -1,6 +1,7 @@
 # true wip to patch dj
 # immediate goal: hooking queries, query logging, query tuning
 # long-run goal: make this modular or find appropriate library
+#  perhaps: https://gorilla.readthedocs.io/en/latest/tutorial.html
 # usage:
 # import djpatch as dj
 
