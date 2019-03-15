@@ -12,9 +12,13 @@ usage: depstick.py [forward|reverse] schema ...
 
 import os
 import sys
+import functools
 
 import datajoint as dj
 import networkx as nx
+
+
+print = functools.partial(print, flush=True)
 
 
 def usage_exit():
@@ -49,6 +53,7 @@ def depstick(sname, direction='reverse'):
         raise Exception("depstick doesn't know {} direction."
                         .format(direction))
 
+    print('-- {} {} dependencies'.format(sname, direction))
     for r in dbc.query(q):
         print(r[0]) if r[0] != sname else None
 
