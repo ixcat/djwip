@@ -5,16 +5,17 @@ import sys
 from os.path import basename
 from getopt import getopt, GetoptError
 from code import interact
-from collections import ChainMap
 
 import datajoint as dj
 
 
 app = basename(sys.argv[0])
 
+
 def usage():
     use = 'usage: {} [-u user] [-p password] [-h host] [-s db:schema ...]'
     print(use.format(app))
+
 
 if __name__ == '__main__':
     user, pw, host, opts, mods = (None, None, None, [], {})
@@ -46,4 +47,3 @@ if __name__ == '__main__':
         banner += '\nschema modules:\n\n' + modstr + '\n'
 
     interact(banner, local=dict(mods, dj=dj))
-
