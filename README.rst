@@ -5,6 +5,8 @@ djwip: datajoint-python work-in-progress utilities/misc
 :Author: C.Turner
 :Status: DRAFT
 
+THIS IS NOT ACTUALLY ACCURATE - repo is not official in any way.
+
 Overview
 ========
 
