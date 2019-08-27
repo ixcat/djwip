@@ -5,27 +5,30 @@ import sys
 from os.path import basename
 from getopt import getopt, GetoptError
 from code import interact
+from collections import ChainMap
 
 import datajoint as dj
 
 
 app = basename(sys.argv[0])
 
-
 def usage():
     use = 'usage: {} [-u user] [-p password] [-h host] [-s db:schema ...]'
     print(use.format(app))
 
 
-if __name__ == '__main__':
-    user, pw, host, opts, mods = (None, None, None, [], {})
+def sql(q):
+    return dj.conn().query(q, as_dict=True).fetchall()
 
+
+if __name__ == '__main__':
     try:
         opts, rest = getopt(sys.argv[1:], 'u:p:h:s:')
     except GetoptError:
         usage()
         sys.exit()
 
+    mods = {}
     for o in opts:
         k, v = o
 
@@ -36,14 +39,12 @@ if __name__ == '__main__':
         if k == '-h':
             dj.config['database.host'] = v
         if k == '-s':
-            d, m = v, v
-            if ':' in v:
-                d, m = v.split(':')
+            d, m = v.split(':')
             mods[m] = dj.create_virtual_module(m, d)
-
+   
     banner = 'dj repl\n'
     if mods:
         modstr = '\n'.join('  - {}'.format(m) for m in mods)
         banner += '\nschema modules:\n\n' + modstr + '\n'
+    interact(banner, local=dict(ChainMap(mods, locals(), globals())))
 
-    interact(banner, local=dict(mods, dj=dj))
