@@ -1,5 +1,15 @@
 #! /usr/bin/env python
 
+'''
+find_timeout.py: utlity schema to assist in finding client/server timeouts
+
+run will attempt running populates with sleep values from 1-60 minutes;
+multirun will repeat this process for a defalt of 10 times.
+
+report will list maximum successful sleep values per run.
+'''
+
+
 import os
 import sys
 import time
@@ -70,24 +80,32 @@ class TestRun(dj.Computed):
 
 def run(*args):
     session = TestSession.create()
+
     TestRun.populate((TestSession * TimeRange & session), reserve_jobs=True,
                      suppress_errors=True)
 
     log.info('completed successfully!')
 
+    return session
+
 
 def multirun(*args):
     nruns = int(args[0]) if args else 10
+
+    sessions = []
 
     for i in range(nruns):
         log.info('multirun: beginning run {}'.format(i))
 
         try:
-            run()
+            s = run()
+            sessions.append(s)
         except Exception as e:
             log.info('run {} encountered exception: {}'.format(i, repr(e)))
 
     log.info('multirun complete')
+
+    return sessions
 
 
 def shell(*args):
