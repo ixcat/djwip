@@ -13,7 +13,7 @@ import datajoint as dj
 import pymysql as sql
 
 
-DEFAULT_INTERVAL = 10
+DEFAULT_INTERVAL = 5
 
 
 def usage_exit():
@@ -46,7 +46,8 @@ def ping(interval=DEFAULT_INTERVAL):
             end = time.time()
             seq += 1
 
-            print('djping from {}: seq={} time={:.3f}'.format( 
+            print('{} djping from {}: seq={} time={:.3f}'.format( 
+                time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()),
                 ip, seq, (end - start) * 1000))
 
             time.sleep(interval)
