@@ -7,5 +7,5 @@ def dct2rec(dat):
     type handling is admittedly hackish..
     '''
     return np.rec.array([tuple(i.values()) for i in dat],
-                        np.dtype[(k, type(v)) for k, v in dat[0].items()])
+                        np.dtype([(k, type(v)) for k, v in dat[0].items()]))
 
