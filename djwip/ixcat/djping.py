@@ -47,7 +47,7 @@ def ping(interval=DEFAULT_INTERVAL):
             seq += 1
 
             print('djping from {}: seq={} time={:.3f}'.format( 
-                ip, seq, end - start))
+                ip, seq, (end - start) * 1000))
 
             time.sleep(interval)
 
